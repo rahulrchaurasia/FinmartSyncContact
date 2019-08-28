@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:showIn="@layout/activity_home"
+        tools:context=".core.controller.home.HomeActivity">
+
+    <ScrollView
+            android:id="@+id/scroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:scrollbars="vertical">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical">
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical">
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:id="@+id/txtMess"
+                        android:text="@string/txtSyncContacts1"/>
+
+                <Button
+                        android:id="@+id/btnSync"
+                        style="@style/ButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:drawableLeft="@drawable/ic_action_download"
+                        android:text="Sync Contact"/>
+
+                <View
+                        android:layout_marginTop="8dp"
+                        android:background="@color/gray_divider_color"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
+
+                <LinearLayout
+                        android:id="@+id/lySync"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+
+                    <ProgressBar
+                            android:visibility="gone"
+                            android:id="@+id/progressBar"
+                            style="@android:style/Widget.ProgressBar.Horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:maxHeight="15dip"
+                            android:minHeight="15dip"/>
+
+                    <LinearLayout
+                            android:id="@+id/lyTotal"
+                            android:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+
+
+                        <TextView
+                                android:id="@+id/txtOutput"
+                                style="@style/TextViewStyle.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Total"
+                                android:textColor="@color/blue"/>
+
+                        <TextView
+                                style="@style/TextViewStyle.Medium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" / "/>
+
+                        <TextView
+                                android:id="@+id/txtCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=""
+
+                                android:textColor="@color/black"/>
+                    </LinearLayout>
+
+                    <TextView
+                            android:id="@+id/txtMessage"
+                            android:layout_marginTop="5dp"
+                            style="@style/TextViewStyle.Large"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text=""
+                            android:textColor="@color/dark_blue"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+            <android.support.v7.widget.CardView
+                    style="@style/CardViewStyle"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:animateLayoutChanges="true"
+                    android:visibility="gone"
+                    app:cardElevation="2dp">
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:padding="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/txtcontain"/>
+
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
