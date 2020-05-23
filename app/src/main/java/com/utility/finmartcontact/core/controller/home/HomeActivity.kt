@@ -18,6 +18,7 @@ import com.utility.finmartcontact.APIResponse
 import com.utility.finmartcontact.BaseActivity
 import com.utility.finmartcontact.IResponseSubcriber
 import com.utility.finmartcontact.R
+import com.utility.finmartcontact.core.controller.contactfetch.ContactFetcher
 import com.utility.finmartcontact.core.controller.login.LoginController
 import com.utility.finmartcontact.core.model.ContactlistEntity
 import com.utility.finmartcontact.core.requestentity.ContactLeadRequestEntity
@@ -49,6 +50,8 @@ class HomeActivity : BaseActivity(), View.OnClickListener, IResponseSubcriber {
         contactlist = ArrayList<ContactlistEntity>()
         templist = ArrayList<String>()
         btnSync.setOnClickListener(this)
+
+
     }
 
 
@@ -64,7 +67,10 @@ class HomeActivity : BaseActivity(), View.OnClickListener, IResponseSubcriber {
                     }
                 } else {
 
-                    syncContactNumber()
+                    //syncContactNumber()
+                    var loadC = ContactFetcher(this@HomeActivity).fetchAll()
+                    Log.d("---TAG", loadC.size.toString())
+
                 }
 
 
@@ -87,7 +93,8 @@ class HomeActivity : BaseActivity(), View.OnClickListener, IResponseSubcriber {
         val uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
         val filter =
             "" + ContactsContract.Contacts.HAS_PHONE_NUMBER + " > 0 and " + ContactsContract.CommonDataKinds.Phone.TYPE + "=" + ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE
-        val order = ContactsContract.Contacts.DISPLAY_NAME + " ASC"// LIMIT " + limit + " offset " + lastId + "";
+        val order =
+            ContactsContract.Contacts.DISPLAY_NAME + " ASC"// LIMIT " + limit + " offset " + lastId + "";
 
         phones = this.contentResolver.query(uri, PROJECTION, filter, null, order)
 
@@ -97,11 +104,20 @@ class HomeActivity : BaseActivity(), View.OnClickListener, IResponseSubcriber {
 
         } else {
 
-              showLoading("Uploading Data..")
+            showLoading("Uploading Data..")
             LoadContactTask().execute()
 
         }
 
+    }
+
+    inner class loadContacts : AsyncTask<Void, Void, Void>() {
+
+        override fun doInBackground(vararg params: Void?): Void? {
+            var loadC = ContactFetcher(this@HomeActivity).fetchAll()
+            Log.d("---TAG", loadC.size.toString())
+            return null
+        }
     }
 
 
@@ -114,6 +130,8 @@ class HomeActivity : BaseActivity(), View.OnClickListener, IResponseSubcriber {
 
         override fun doInBackground(vararg voids: Void): Void? {
             // Get Contact list from Phone
+
+            Log.d("---Phone", phones.toString())
 
             // val regex = Regex("[^0-9\\s]")
             val regex = Regex("[^.0-9]")
@@ -146,7 +164,10 @@ class HomeActivity : BaseActivity(), View.OnClickListener, IResponseSubcriber {
                                     mobileno = phoneNumber,
                                     id = i
                                 )
-                                Log.i(TAG, "Key ID: " + i + " Name: " + name + " Mobile: " + phoneNumber + "\n");
+                                Log.i(
+                                    TAG,
+                                    "Key ID: " + i + " Name: " + name + " Mobile: " + phoneNumber + "\n"
+                                );
                                 contactlist?.add(selectUser)
                                 publishProgress(i++)
                             }
@@ -175,7 +196,7 @@ class HomeActivity : BaseActivity(), View.OnClickListener, IResponseSubcriber {
             txtCount.setText("" + contactlist!!.size)
 
 
-            sendContactToServer()
+            // sendContactToServer()
 
             //region commented Send To server
 
@@ -209,14 +230,16 @@ class HomeActivity : BaseActivity(), View.OnClickListener, IResponseSubcriber {
                 subcontactlist = contactlist!!.filter { it.id > i && it.id <= (100 + i) }
 
 
-
                 //region  Adding in Request Entity and Send to server
                 val contactRequestEntity = ContactLeadRequestEntity(
                     fbaid = applicationPersistance!!.getFBAID().toString(),
                     contactlist = subcontactlist
                 )
 
-                LoginController(this@HomeActivity).uploadContact(contactRequestEntity, this@HomeActivity)
+                LoginController(this@HomeActivity).uploadContact(
+                    contactRequestEntity,
+                    this@HomeActivity
+                )
 
                 //endregion
 
@@ -228,8 +251,6 @@ class HomeActivity : BaseActivity(), View.OnClickListener, IResponseSubcriber {
 
 
     }
-
-
 
 
     override fun onSuccess(response: APIResponse, message: String) {
@@ -258,7 +279,10 @@ class HomeActivity : BaseActivity(), View.OnClickListener, IResponseSubcriber {
 
     private fun checkRationalePermission(): Boolean {
         val readContact =
-            ActivityCompat.shouldShowRequestPermissionRationale(this@HomeActivity, Manifest.permission.READ_CONTACTS)
+            ActivityCompat.shouldShowRequestPermissionRationale(
+                this@HomeActivity,
+                Manifest.permission.READ_CONTACTS
+            )
 
         return readContact
     }
@@ -286,7 +310,11 @@ class HomeActivity : BaseActivity(), View.OnClickListener, IResponseSubcriber {
     }
 
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         when (requestCode) {
             Utility.READ_CONTACTS_CODE -> {
 
