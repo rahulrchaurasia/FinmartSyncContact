@@ -14,10 +14,15 @@ import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonArray
+import com.google.gson.reflect.TypeToken
 import com.utility.finmartcontact.APIResponse
 import com.utility.finmartcontact.BaseActivity
 import com.utility.finmartcontact.IResponseSubcriber
 import com.utility.finmartcontact.R
+import com.utility.finmartcontact.core.controller.contactfetch.Contact
 import com.utility.finmartcontact.core.controller.contactfetch.ContactFetcher
 import com.utility.finmartcontact.core.controller.login.LoginController
 import com.utility.finmartcontact.core.model.ContactlistEntity
@@ -25,7 +30,9 @@ import com.utility.finmartcontact.core.requestentity.ContactLeadRequestEntity
 import com.utility.finmartcontact.utility.Utility
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.content_home.*
+import java.lang.reflect.Type
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class HomeActivity : BaseActivity(), View.OnClickListener, IResponseSubcriber {
@@ -70,6 +77,10 @@ class HomeActivity : BaseActivity(), View.OnClickListener, IResponseSubcriber {
                     //syncContactNumber()
                     var loadC = ContactFetcher(this@HomeActivity).fetchAll()
                     Log.d("---TAG", loadC.size.toString())
+                    var gson = Gson()
+                    val loadArray = gson.toJson(loadC)
+
+                    Log.d("---TAG", loadArray.toString())
 
                     for (i in loadC) {
 
