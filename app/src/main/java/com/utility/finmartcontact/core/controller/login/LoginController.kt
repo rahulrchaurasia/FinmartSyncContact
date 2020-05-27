@@ -1,6 +1,7 @@
 package com.utility.finmartcontact.core.controller.login
 
 import android.content.Context
+
 import com.utility.finmartcontact.BaseController
 import com.utility.finmartcontact.BuildConfig
 import com.utility.finmartcontact.IResponseSubcriber
@@ -61,7 +62,8 @@ class LoginController(val context : Context) : BaseController() ,ILogin {
 
     override fun uploadContact(contactLeadRequestEntity: ContactLeadRequestEntity, iResponseSubcriber: IResponseSubcriber) {
 
-        var url = BuildConfig.SYNC_CONTACT_URL + "/SyncContacts"
+        var url = BuildConfig.SYNC_CONTACT_URL + "/contact_entry"
+
         loginNetwork.saveContactLead(url ,contactLeadRequestEntity).enqueue(object : Callback<ContactLeadResponse>{
 
 

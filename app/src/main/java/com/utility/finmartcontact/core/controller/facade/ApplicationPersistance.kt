@@ -42,4 +42,8 @@ open class ApplicationPersistance (context: Context) : IApplicationPersistance {
     override fun getFBAID(): Int {
         if (getUser() != null) return getUser()!!.FBAId.toInt() else return 0
     }
+
+    override fun getSSID(): String {
+        if (getUser() != null) return getUser()!!.ssid else return "0"
+    }
 }

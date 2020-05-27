@@ -8,5 +8,6 @@ data class ContactlistEntity (
     var name: String,
     var id: Int
 
+
 )
 

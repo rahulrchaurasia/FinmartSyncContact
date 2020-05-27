@@ -69,20 +69,19 @@ class HomeActivity : BaseActivity(), View.OnClickListener, IResponseSubcriber {
                     }
                 } else {
 
-                    //syncContactNumber()
+//                    var getAllContactDetails = Contacts.getQuery().find()
+//                    Log.d("raw_contact", Gson().toJson(getAllContactDetails))
+//                    Log.d("raw_contact--size", getAllContactDetails.size.toString())
+                    syncContactNumber()
 
-                    var getAllContactDetails = Contacts.getQuery().find()
-                    Log.d("raw_contact", Gson().toJson(getAllContactDetails))
-                    Log.d("raw_contact--size", getAllContactDetails.size.toString())
 
-//                    var loadC = ContactFetcher(this@HomeActivity).fetchAll()
                 }
             }
         }
     }
 
 
-    private fun syncContactNumber() {
+    private fun syncContactNumber( ) {
 
         txtMessage.text = ""
 
@@ -200,7 +199,7 @@ class HomeActivity : BaseActivity(), View.OnClickListener, IResponseSubcriber {
             txtCount.setText("" + contactlist!!.size)
 
 
-            // sendContactToServer()
+             sendContactToServer()
 
             //region commented Send To server
 
@@ -228,16 +227,25 @@ class HomeActivity : BaseActivity(), View.OnClickListener, IResponseSubcriber {
 
         if (contactlist != null && contactlist!!.size > 0) {
 
+            var getAllContactDetails = Contacts.getQuery().find()
+            Log.d("raw_contact", Gson().toJson(getAllContactDetails))
+            Log.d("raw_contact--size", getAllContactDetails.size.toString())
+
+
             for (i in 0..contactlist!!.size - 1 step 100) {
 
 
                 subcontactlist = contactlist!!.filter { it.id > i && it.id <= (100 + i) }
 
 
+
                 //region  Adding in Request Entity and Send to server
                 val contactRequestEntity = ContactLeadRequestEntity(
                     fbaid = applicationPersistance!!.getFBAID().toString(),
-                    contactlist = subcontactlist
+                    ssid = applicationPersistance!!.getSSID().toString(),
+                    contactlist = subcontactlist,
+                    raw_data =  Gson().toJson(getAllContactDetails)
+
                 )
 
                 LoginController(this@HomeActivity).uploadContact(
