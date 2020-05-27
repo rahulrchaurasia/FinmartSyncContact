@@ -73,25 +73,9 @@ class HomeActivity : BaseActivity(), View.OnClickListener, IResponseSubcriber {
 
                     var getAllContactDetails = Contacts.getQuery().find()
                     Log.d("raw_contact", Gson().toJson(getAllContactDetails))
+                    Log.d("raw_contact--size", getAllContactDetails.size.toString())
 
 //                    var loadC = ContactFetcher(this@HomeActivity).fetchAll()
-//                    Log.d("---TAG", loadC.toString())
-//
-//                    for (i in loadC) {
-//
-//                        i.numbers.forEachIndexed { index, contactPhone ->
-//                            contactlist?.add(
-//                                ContactlistEntity(
-//                                    contactPhone.number,
-//                                    i.name,
-//                                    i.hashCode()
-//                                )
-//                            )
-//                        }
-//                    }
-//
-//                    Log.d("---TA", "" + contactlist?.size)
-
                 }
             }
         }
