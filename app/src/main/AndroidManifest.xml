@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
 
     <application
+            android:name=".SyncContactApplication"
             android:allowBackup="true"
             android:icon="@mipmap/contact_launcher"
             android:label="@string/app_name"
