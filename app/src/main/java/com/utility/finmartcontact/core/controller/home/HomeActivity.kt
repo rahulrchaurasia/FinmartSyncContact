@@ -14,6 +14,8 @@ import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
+import com.github.tamir7.contacts.Contacts
+import com.google.gson.Gson
 import com.utility.finmartcontact.APIResponse
 import com.utility.finmartcontact.BaseActivity
 import com.utility.finmartcontact.IResponseSubcriber
@@ -68,31 +70,33 @@ class HomeActivity : BaseActivity(), View.OnClickListener, IResponseSubcriber {
                 } else {
 
                     //syncContactNumber()
-                    var loadC = ContactFetcher(this@HomeActivity).fetchAll()
-                    Log.d("---TAG", loadC.size.toString())
 
-                    for (i in loadC) {
+                    var getAllContactDetails = Contacts.getQuery().find()
+                    Log.d("raw_contact", Gson().toJson(getAllContactDetails))
 
-                        i.numbers.forEachIndexed { index, contactPhone ->
-                            contactlist?.add(
-                                ContactlistEntity(
-                                    contactPhone.number,
-                                    i.name,
-                                    i.hashCode()
-                                )
-                            )
-                        }
-
-                    }
-
-                    Log.d("---TA", "" + contactlist?.size)
+//                    var loadC = ContactFetcher(this@HomeActivity).fetchAll()
+//                    Log.d("---TAG", loadC.toString())
+//
+//                    for (i in loadC) {
+//
+//                        i.numbers.forEachIndexed { index, contactPhone ->
+//                            contactlist?.add(
+//                                ContactlistEntity(
+//                                    contactPhone.number,
+//                                    i.name,
+//                                    i.hashCode()
+//                                )
+//                            )
+//                        }
+//                    }
+//
+//                    Log.d("---TA", "" + contactlist?.size)
 
                 }
-
-
             }
         }
     }
+
 
     private fun syncContactNumber() {
 
