@@ -2,13 +2,13 @@ package com.utility.finmartcontact.login
 
 import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import com.utility.finmartcontact.APIResponse
 import com.utility.finmartcontact.BaseActivity
 import com.utility.finmartcontact.IResponseSubcriber
@@ -17,11 +17,7 @@ import com.utility.finmartcontact.core.controller.home.HomeActivity
 import com.utility.finmartcontact.core.controller.login.LoginController
 import com.utility.finmartcontact.core.requestentity.LoginRequestEntity
 import com.utility.finmartcontact.core.response.LoginResponse
-import com.utility.finmartcontact.utility.RequestPermission
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.content_login.*
-
-
 
 
 class LoginActivity : BaseActivity(), View.OnClickListener, IResponseSubcriber {
@@ -36,7 +32,9 @@ class LoginActivity : BaseActivity(), View.OnClickListener, IResponseSubcriber {
       //  setSupportActionBar(toolbar)
 
         btnSignIn.setOnClickListener(this)
+
         setupPermissions()
+
 
     }
 
@@ -49,6 +47,17 @@ class LoginActivity : BaseActivity(), View.OnClickListener, IResponseSubcriber {
         }
     }
 
+    private fun getVersionNo() : Int {
+
+        try {
+            val pInfo: PackageInfo = this@LoginActivity.getPackageManager().getPackageInfo(packageName, 0)
+            val version = pInfo.versionCode
+            return version
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+            return 3
+        }
+    }
 
     private fun checkRationalePermission(): Boolean {
         val readContact = ActivityCompat.shouldShowRequestPermissionRationale(this@LoginActivity,Manifest.permission.READ_CONTACTS)
@@ -79,8 +88,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener, IResponseSubcriber {
 
                 var loginRequestEntity = LoginRequestEntity(
                     UserName = etEmail.text.toString(),
-                    Password = etPassword.text.toString()
-
+                    Password = etPassword.text.toString(),
+                   VersionNo = getVersionNo()
                 )
 
                 showLoading("Authenticating user..")

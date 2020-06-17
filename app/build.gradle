@@ -10,8 +10,8 @@ android {
         applicationId "com.utility.finmartcontact"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "3.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -26,11 +26,11 @@ android {
         }
         debug {
             debuggable true
-//            buildConfigField "String", "FINMART_URL", '"http://qa.mgfm.in"'
+     //      buildConfigField "String", "FINMART_URL", '"http://qa.mgfm.in"'
 //            buildConfigField "String", "SYNC_CONTACT_URL", '"http://49.50.95.141:97/EducationAppWebService.svc"'
 //            buildConfigField "String", "PHP_URL", '"http://bo.magicfinmart.com/"'
 
-            buildConfigField "String", "FINMART_URL", '"http://api.magicfinmart.com"'
+           buildConfigField "String", "FINMART_URL", '"http://api.magicfinmart.com"'
             buildConfigField "String", "SYNC_CONTACT_URL", '"http://horizon.policyboss.com:5000/sync_contacts"'
             buildConfigField "String", "PHP_URL", '"http://bo.magicfinmart.com/"'
 
